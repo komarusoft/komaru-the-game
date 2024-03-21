@@ -12,5 +12,5 @@ set(CMAKE_CXX_COMPILER "clang++")
 set(SOURCE src/main.cpp)
 add_executable(komaru_the_game ${SOURCE})
 
-target_link_libraries(komaru_the_game sfml-graphics sfml-window sfml-system)
+target_link_libraries(komaru_the_game PUBLIC sfml-graphics sfml-window sfml-system)
 target_link_libraries(komaru_the_game PRIVATE nlohmann_json::nlohmann_json)
