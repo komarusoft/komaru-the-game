@@ -2,7 +2,7 @@ if [ -d "build" ]; then
     rm -rf build
 fi
 
-if [ -d "json"]; then
+if [ ! -d "json" ]; then
     git clone https://github.com/nlohmann/json/
 fi
 
