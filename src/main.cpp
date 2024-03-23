@@ -2,22 +2,18 @@
 
 using namespace sf;
 
-int main()
-{
+int main() {
     RenderWindow window(VideoMode(800, 600), "Parallax Example",
-                            Style::Titlebar | Style::Close);
+        Style::Titlebar | Style::Close);
 
-   /*
-    RenderWindow window(VideoMode(800, 600), "Parallax Example",
-                            Style::Titlebar | Style::Close | Style::Fullscreen);    
-   */                        
+    /*
+     RenderWindow window(VideoMode(800, 600), "Parallax Example",
+                             Style::Titlebar | Style::Close | Style::Fullscreen);
+    */
     window.setVerticalSyncEnabled(true);
 
     Texture texture1, texture2, texture3, texture4;
-    if (!texture1.loadFromFile("../res/1.png") ||
-        !texture2.loadFromFile("../res/2.png") ||
-        !texture3.loadFromFile("../res/3.png") ||
-        !texture4.loadFromFile("../res/4.png")) {
+    if (!texture1.loadFromFile("../res/main_menu_res/1.png") || !texture2.loadFromFile("../res/main_menu_res/2.png") || !texture3.loadFromFile("../res/main_menu_res/3.png") || !texture4.loadFromFile("../res/main_menu_res/4.png")) {
         // Обработка ошибок загрузки
         return EXIT_FAILURE;
     }
@@ -42,21 +38,19 @@ int main()
         "    gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
         "    gl_TexCoord[0].x = gl_TexCoord[0].x + offset;" // magic
         "    gl_FrontColor = gl_Color;"
-        "}"
-        , Shader::Vertex);
+        "}",
+        Shader::Vertex);
 
     float offset = 0.f;
 
     Clock clock;
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             switch (event.type) {
-            case Event::Closed:
-                window.close();
-                break;
+                case Event::Closed:
+                    window.close();
+                    break;
             }
         }
 
