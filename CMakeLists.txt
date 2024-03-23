@@ -9,7 +9,10 @@ include_directories(${CMAKE_SOURCE_DIR}/json)
 set(CMAKE_C_COMPILER "clang")  
 set(CMAKE_CXX_COMPILER "clang++")  
 
-set(SOURCE src/main.cpp)
+set(SOURCE 
+    src/main.cpp
+    src/MainMenu.cpp
+    )
 add_executable(komaru_the_game ${SOURCE})
 
 target_link_libraries(komaru_the_game PUBLIC sfml-graphics sfml-window sfml-system)
