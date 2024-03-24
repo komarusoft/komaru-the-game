@@ -4,10 +4,10 @@
 
 class MainMenu {
 private:
-    float menuSizeX;
-    float menuSizeY;
+    float menuCoordX;
+    float menuCoordY;
     int rangeBetweenMenuItems;
-    int maxMenuItemCount;
+    int maxMenuItemsCount;
     int fontSize;
     int currentSelectedMenuItem;
 

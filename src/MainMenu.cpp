@@ -17,7 +17,7 @@ void MainMenu::setInitItems(sf::Text& item, sf::String label, float posX, float 
  */
 void MainMenu::alignMenuItems(int posX) {
     float nullx = 0;
-    for (uint8_t i = 0; i < maxMenuItemCount; i++) {
+    for (uint8_t i = 0; i < maxMenuItemsCount; i++) {
         switch (posX) {
             case 0:
                 nullx = 0;
@@ -35,11 +35,52 @@ void MainMenu::alignMenuItems(int posX) {
     }
 }
 
-MainMenu::MainMenu(sf::RenderWindow& window, float menuSizeX, float menuSizeY,
+MainMenu::MainMenu(sf::RenderWindow& window, float menux, float menuy,
     int maxMenuItemsCount, sf::String* itemsName, int sizeFont, int step)
-        : window(window) {
+        : window(window)
+        , menuCoordX(menux)
+        , menuCoordY(menuy)
+        , fontSize(sizeFont)
+        , rangeBetweenMenuItems(step)
+        , maxMenuItemsCount(maxMenuItemsCount) {
+
+    if (!font.loadFromFile("/res/fonts/slkscr.ttf"))
+        exit(1);
+
+    mainMenuItems = new sf::Text[maxMenuItemsCount];
+    for (int i = 0, ypos = menuCoordY; i < maxMenuItemsCount; i++, ypos += rangeBetweenMenuItems)
+        setInitItems(mainMenuItems[i], itemsName[i], menuCoordX, ypos);
+
+    currentSelectedMenuItem = 0;
+    mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
 }
 
 MainMenu::~MainMenu() {
     delete[] mainMenuItems;
+}
+
+void MainMenu::moveUp() {
+    currentSelectedMenuItem--;
+
+    if (currentSelectedMenuItem >= 0) {
+        mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
+        mainMenuItems[currentSelectedMenuItem + 1].setFillColor(menuTextColor);
+    } else {
+        mainMenuItems[0].setFillColor(menuTextColor);
+        currentSelectedMenuItem = maxMenuItemsCount - 1;
+        mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
+    }
+}
+
+void MainMenu::moveDown() {
+    currentSelectedMenuItem++;
+
+    if (currentSelectedMenuItem < maxMenuItemsCount) {
+        mainMenuItems[currentSelectedMenuItem - 1].setFillColor(menuTextColor);
+        mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
+    } else {
+        mainMenuItems[maxMenuItemsCount - 1].setFillColor(menuTextColor);
+        currentSelectedMenuItem = 0;
+        mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
+    }
 }
