@@ -44,7 +44,7 @@ MainMenu::MainMenu(sf::RenderWindow& window, float menux, float menuy,
         , rangeBetweenMenuItems(step)
         , maxMenuItemsCount(maxMenuItemsCount) {
 
-    if (!font.loadFromFile("/res/fonts/slkscr.ttf"))
+    if (!font.loadFromFile("res/fonts/slkscr.ttf"))
         exit(1);
 
     mainMenuItems = new sf::Text[maxMenuItemsCount];
@@ -83,4 +83,26 @@ void MainMenu::moveDown() {
         currentSelectedMenuItem = 0;
         mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
     }
+}
+
+void MainMenu::drawMenu() {
+    for (int i = 0; i < maxMenuItemsCount; i++)
+        window.draw(mainMenuItems[i]);
+}
+
+void MainMenu::setTextMenuColor(sf::Color menuTextColor, sf::Color onHoverMenuTextColor, sf::Color itemBorderColor) {
+    this->menuTextColor = menuTextColor;
+    this->hoverMenuTextColor = onHoverMenuTextColor;
+    this->itemBorderColor = itemBorderColor;
+
+    for (int i = 0; i < maxMenuItemsCount; i++) {
+        mainMenuItems[i].setFillColor(menuTextColor);
+        mainMenuItems[i].setOutlineColor(itemBorderColor);
+    }
+
+    mainMenuItems[currentSelectedMenuItem].setFillColor(hoverMenuTextColor);
+}
+
+int MainMenu::getCurrentSelectedMenuIndex() {
+    return currentSelectedMenuItem;
 }

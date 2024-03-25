@@ -7,8 +7,8 @@ private:
     float menuCoordX;
     float menuCoordY;
     int rangeBetweenMenuItems;
-    int maxMenuItemsCount;
     int fontSize;
+    int maxMenuItemsCount;
     int currentSelectedMenuItem;
 
     sf::Font font;
@@ -30,7 +30,7 @@ public:
     void moveDown();
     void setTextMenuColor(sf::Color menuTextColor, sf::Color onHoverMenuTextColor, sf::Color itemBorderColor);
     void alignMenuItems(int posX);
-    void getCurrentSelectedMenuIndex();
+    int getCurrentSelectedMenuIndex();
 };
 
 #endif // !MAIN_MENU_H
