@@ -85,11 +85,6 @@ void MainMenu::moveDown() {
     }
 }
 
-void MainMenu::drawMenu() {
-    for (int i = 0; i < maxMenuItemsCount; i++)
-        window.draw(mainMenuItems[i]);
-}
-
 void MainMenu::setTextMenuColor(sf::Color menuTextColor, sf::Color onHoverMenuTextColor, sf::Color itemBorderColor) {
     this->menuTextColor = menuTextColor;
     this->hoverMenuTextColor = onHoverMenuTextColor;
@@ -106,3 +101,64 @@ void MainMenu::setTextMenuColor(sf::Color menuTextColor, sf::Color onHoverMenuTe
 int MainMenu::getCurrentSelectedMenuIndex() {
     return currentSelectedMenuItem;
 }
+
+void MainMenu::renderMenu() {
+    window.draw(parallaxSprite4, &parallaxShader);
+    window.draw(parallaxSprite3, &parallaxShader);
+    window.draw(parallaxSprite2, &parallaxShader);
+    window.draw(parallaxSprite1, &parallaxShader);
+    for (int i = 0; i < maxMenuItemsCount; i++)
+        window.draw(mainMenuItems[i]);
+}
+
+#pragma region paralax
+
+void MainMenu::loadParalaxTextures(const std::string& parallaxTexturePath1, const std::string& parallaxTexturePath2, const std::string& parallaxTexturePath3, const std::string& parallaxTexturePath4) {
+    parallaxTexture1.loadFromFile(parallaxTexturePath1);
+    parallaxTexture2.loadFromFile(parallaxTexturePath2);
+    parallaxTexture3.loadFromFile(parallaxTexturePath3);
+    parallaxTexture4.loadFromFile(parallaxTexturePath4);
+}
+
+void MainMenu::setParalaxSpeeds(float parallaxSpeed1, float parallaxSpeed2, float parallaxSpeed3) {
+    this->parallaxSpeed1 = parallaxSpeed1;
+    this->parallaxSpeed2 = parallaxSpeed2;
+    this->parallaxSpeed3 = parallaxSpeed3;
+}
+
+void MainMenu::initializeParalax() {
+    parallaxSprite1.setTexture(parallaxTexture1);
+    parallaxSprite2.setTexture(parallaxTexture2);
+    parallaxSprite3.setTexture(parallaxTexture3);
+    parallaxSprite4.setTexture(parallaxTexture4);
+
+    parallaxOffset = 0.f;
+
+    parallaxShader.loadFromMemory(
+        "uniform float offset;"
+
+        "void main() {"
+        "    gl_Position = gl_ProjectionMatrix * gl_ModelViewMatrix * gl_Vertex;"
+        "    gl_TexCoord[0] = gl_TextureMatrix[0] * gl_MultiTexCoord0;"
+        "    gl_TexCoord[0].x = gl_TexCoord[0].x + offset;" // magic
+        "    gl_FrontColor = gl_Color;"
+        "}",
+        sf::Shader::Vertex);
+
+    parallaxTexture1.setRepeated(true);
+    parallaxTexture2.setRepeated(true);
+    parallaxTexture3.setRepeated(true);
+    parallaxTexture4.setRepeated(true);
+
+    parallaxSprite1.setScale(float(window.getSize().x) / parallaxTexture1.getSize().x, float(window.getSize().y) / parallaxTexture1.getSize().y);
+    parallaxSprite2.setScale(float(window.getSize().x) / parallaxTexture2.getSize().x, float(window.getSize().y) / parallaxTexture2.getSize().y);
+    parallaxSprite3.setScale(float(window.getSize().x) / parallaxTexture3.getSize().x, float(window.getSize().y) / parallaxTexture3.getSize().y);
+    parallaxSprite4.setScale(float(window.getSize().x) / parallaxTexture4.getSize().x, float(window.getSize().y) / parallaxTexture4.getSize().y);
+}
+
+void MainMenu::updateParalax() {
+    parallaxOffset += clock.restart().asSeconds() / 10;
+    parallaxShader.setUniform("offset", parallaxOffset);
+}
+
+#pragma endregion

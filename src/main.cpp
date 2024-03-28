@@ -18,10 +18,10 @@ int main() {
 #pragma region main menu setting up
     // Background #TODO: change to paralax
     RectangleShape background(Vector2f(width, height));
-    Texture texture_window;
-    if (!texture_window.loadFromFile("res/main_menu_res/4.png"))
-        return 4;
-    background.setTexture(&texture_window);
+    // Texture texture_window;
+    // // if (!texture_window.loadFromFile("res/main_menu_res/4.png"))
+    //     return 4;
+    // background.setTexture(&texture_window);
 
     Font font;
     if (!font.loadFromFile("res/fonts/slkscr.ttf"))
@@ -35,8 +35,17 @@ int main() {
     // TODO: add support for another resolution
     MainMenu mainmenu(window, width / 2 - 100, height / 2, 4, name_menu, 100, 120);
     mainmenu.setTextMenuColor(Color(237, 147, 0), Color::Red, Color::Black);
+
+    mainmenu.loadParalaxTextures("res/main_menu_res/1.png", "res/main_menu_res/2.png", "res/main_menu_res/3.png", "res/main_menu_res/4.png");
+    mainmenu.setParalaxSpeeds(0.1f, 0.5f, 1.0f);
+    // mainmenu.setParalaxSpeeds(-0.1f, -0.5f, -1.0f);
+    mainmenu.initializeParalax();
+
     mainmenu.alignMenuItems(2);
 
+    float offset = 0.f;
+
+    Clock clock;
 #pragma endregion
     while (window.isOpen()) {
         Event event;
@@ -75,11 +84,17 @@ int main() {
                 }
             }
         }
+        // offset += clock.restart().asSeconds() / 10;
 
+        // // Установка значения смещения в uniform переменную шейдера
+        // parallaxShader.setUniform("offset", offset);
+
+        mainmenu.updateParalax();
         window.clear();
-        window.draw(background);
-        window.draw(h1);
-        mainmenu.drawMenu();
+        // window.draw(background);
+        mainmenu.renderMenu();
+
+        // window.draw(h1);
         window.display();
     }
 

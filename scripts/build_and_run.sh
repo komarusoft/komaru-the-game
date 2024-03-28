@@ -13,7 +13,7 @@ chmod 644 /build/res
 
 cd build
 
-cmake -DCMAKE_CXX_COMPILER=clang++ ..
+cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Debug -DDEBUG=ON ..
 make
 
 sudo chmod +x komaru_the_game
