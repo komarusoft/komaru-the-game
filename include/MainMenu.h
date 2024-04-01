@@ -1,8 +1,8 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 #include <SFML/Graphics.hpp>
-// #include <SFML/System/Clock.hpp>
 #include <iostream>
+
 class MainMenu {
 private:
     float menuCoordX;
@@ -29,10 +29,6 @@ private:
     sf::Sprite parallaxSprite3;
     sf::Sprite parallaxSprite4;
 
-    float parallaxSpeed1;
-    float parallaxSpeed2;
-    float parallaxSpeed3;
-    float parallaxSpeed4;
     float parallaxOffset;
     sf::Clock clock;
     sf::Shader parallaxShader;
@@ -52,10 +48,9 @@ public:
     void alignMenuItems(int posX);
     int getCurrentSelectedMenuIndex();
 
-    // paralax
-    void loadParalaxTextures(const std::string& paralaxTexturePath1, const std::string& paralaxTexturePath2, const std::string& paralaxTexturePath3, const std::string& paralaxTexturePath4);
-    void setParalaxSpeeds(float paralaxSpeed1, float paralaxSpeed2, float paralaxSpeed3);
-    void initializeParalax();
-    void updateParalax();
+    // parallax
+    void loadParallaxTextures(const std::string& parallaxTexturePath1, const std::string& parallaxTexturePath2, const std::string& parallaxTexturePath3, const std::string& parallaxTexturePath4);
+    void initializeParallax();
+    void updateParallax();
 };
 #endif // !MAIN_MENU_H

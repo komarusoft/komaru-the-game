@@ -113,20 +113,14 @@ void MainMenu::renderMenu() {
 
 #pragma region paralax
 
-void MainMenu::loadParalaxTextures(const std::string& parallaxTexturePath1, const std::string& parallaxTexturePath2, const std::string& parallaxTexturePath3, const std::string& parallaxTexturePath4) {
+void MainMenu::loadParallaxTextures(const std::string& parallaxTexturePath1, const std::string& parallaxTexturePath2, const std::string& parallaxTexturePath3, const std::string& parallaxTexturePath4) {
     parallaxTexture1.loadFromFile(parallaxTexturePath1);
     parallaxTexture2.loadFromFile(parallaxTexturePath2);
     parallaxTexture3.loadFromFile(parallaxTexturePath3);
     parallaxTexture4.loadFromFile(parallaxTexturePath4);
 }
 
-void MainMenu::setParalaxSpeeds(float parallaxSpeed1, float parallaxSpeed2, float parallaxSpeed3) {
-    this->parallaxSpeed1 = parallaxSpeed1;
-    this->parallaxSpeed2 = parallaxSpeed2;
-    this->parallaxSpeed3 = parallaxSpeed3;
-}
-
-void MainMenu::initializeParalax() {
+void MainMenu::initializeParallax() {
     parallaxSprite1.setTexture(parallaxTexture1);
     parallaxSprite2.setTexture(parallaxTexture2);
     parallaxSprite3.setTexture(parallaxTexture3);
@@ -156,7 +150,7 @@ void MainMenu::initializeParalax() {
     parallaxSprite4.setScale(float(window.getSize().x) / parallaxTexture4.getSize().x, float(window.getSize().y) / parallaxTexture4.getSize().y);
 }
 
-void MainMenu::updateParalax() {
+void MainMenu::updateParallax() {
     parallaxOffset += clock.restart().asSeconds() / 10;
     parallaxShader.setUniform("offset", parallaxOffset);
 }
