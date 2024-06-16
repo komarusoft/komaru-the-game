@@ -32,7 +32,6 @@ int main() {
     mainmenu.setTextMenuColor(Color(237, 147, 0), Color::Red, Color::Black);
 
     mainmenu.loadParallaxTextures("res/main_menu_res/1.png", "res/main_menu_res/2.png", "res/main_menu_res/3.png", "res/main_menu_res/4.png");
-    mainmenu.setParalaxSpeeds(0.1f, 0.5f, 1.0f);
     mainmenu.initializeParallax();
 
     mainmenu.alignMenuItems(2);

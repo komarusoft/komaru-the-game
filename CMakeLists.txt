@@ -23,6 +23,7 @@ endif()
 set(SOURCE 
     src/main.cpp
     src/MainMenu.cpp
+    src/SettingsMenu.cpp
     )
 add_executable(komaru_the_game ${SOURCE})
 
